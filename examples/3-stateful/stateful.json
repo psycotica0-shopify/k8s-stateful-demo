@@ -1,0 +1,56 @@
+{
+  "apiVersion": "apps/v1",
+  "kind": "StatefulSet",
+  "metadata": {
+    "name": "test"
+  },
+  "spec": {
+    "selector": {
+      "matchLabels": {
+        "app": "test"
+      }
+    },
+    "serviceName": "headless-service",
+    "replicas": 3,
+    "template": {
+      "metadata": {
+        "labels": {
+          "app": "test"
+        }
+      },
+      "spec": {
+        "containers": [
+          {
+            "image": "k8s-stateful-test:latest",
+            "imagePullPolicy": "Never",
+            "name": "app",
+            "volumeMounts": [
+              {
+                "mountPath": "/saved",
+                "name": "claim"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "volumeClaimTemplates": [
+      {
+        "metadata": {
+          "name": "claim"
+        },
+        "spec": {
+          "accessModes": [
+            "ReadWriteOnce"
+          ],
+          "storageClassName": "standard",
+          "resources": {
+            "requests": {
+              "storage": "5Mi"
+            }
+          }
+        }
+      }
+    ]
+  }
+}
