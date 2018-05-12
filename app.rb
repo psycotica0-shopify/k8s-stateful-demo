@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'socket'
+require 'net/http'
 
 get '/' do
   "Test words\n"
@@ -10,7 +11,7 @@ get '/id' do
 end
 
 def f(x)
-  File.join("./", x)
+  File.join("/saved", x)
 end
 
 get '/data/:name' do
@@ -25,4 +26,8 @@ post '/data/:name' do
   File.open(f(params['name']), "w") do |file|
     file.write(request.body.read)
   end
+end
+
+get '/from/:host/:name' do
+  Net::HTTP.get(params['host'] + ".headless-service.default.svc.cluster.local.", "/data/" + params['name'], 4567)
 end
