@@ -1,0 +1,35 @@
+{
+  "apiVersion": "v1",
+  "kind": "Pod",
+  "metadata": {
+    "labels": {
+      "app": "test"
+    },
+    "name": "raw-pod"
+  },
+  "spec": {
+    "hostname": "raw-pod",
+    "subdomain": "headless-service",
+    "containers": [
+      {
+        "image": "k8s-stateful-test:latest",
+        "imagePullPolicy": "Never",
+        "name": "app",
+        "volumeMounts": [
+          {
+            "mountPath": "/saved",
+            "name": "claim"
+          }
+        ]
+      }
+    ],
+    "volumes": [
+      {
+        "name": "claim",
+        "persistentVolumeClaim": {
+          "claimName": "test-claim"
+        }
+      }
+    ]
+  }
+}

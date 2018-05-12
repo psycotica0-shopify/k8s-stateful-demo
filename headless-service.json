@@ -1,0 +1,19 @@
+{
+  "kind": "Service",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "headless-service"
+  },
+  "spec": {
+    "selector": {
+      "app": "test"
+    },
+    "clusterIP": "None",
+    "ports": [
+      {
+      "protocol": "TCP",
+      "port": 4567
+      }
+    ]
+  }
+}
