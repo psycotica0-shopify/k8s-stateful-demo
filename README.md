@@ -4,21 +4,18 @@ It was intended to be presented as I went through it, but if you want to look at
 Essentially I talked about how StatefulSets do what they do, and why you might want that.
 
 The examples folder contains the k8s parts:
-0-dep
+- 0-dep
   This is a normal deployment.
   I showed how you can load-balance across them, but you can't be sure that you'll get the same data twice, etc.
   There's also no persistence.
-
-1-raw
+- 1-raw
   This is a pod. It has uses a PersistentVolumeClaim built just for it, and a Headless service (where it sets the hostname and subdomain to match) to provide it a stable internal name it can be reached at.
-
-2-multi
+- 2-multi
   This is a template (using jq) that generates a cluster of pods such as the above.
   They each have a different hostname, and a different PersistentVolumeClaim.
 
   This is great, but it doesn't get restarted when they die, etc.
-
-3-stateful
+- 3-stateful
   This is doing the same thing finally with the StatefulSet.
   This is the official k8s way and gives us a lot of useful benefits, but under the covers it's just doing the above.
 
